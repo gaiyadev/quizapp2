@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutt_app/quiz.dart';
 import 'package:flutt_app/result.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +22,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _questionIndex = 0;
+  var _totalScore = 0;
   final _questions = [
     {
       'questionText': 'What\'s your favorite color?',
@@ -50,12 +53,20 @@ class _HomeState extends State<Home> {
     },
   ];
 
-  void _answerQuestion() {
+  void _answerQuestion(int score) {
     if (_questionIndex < _questions.length) {
+      _totalScore += score;
       setState(() {
         _questionIndex++;
       });
     }
+  }
+
+  Void _resetQuiz() {
+    setState(() {
+      _questionIndex = 0;
+      _totalScore = 0;
+    });
   }
 
   @override
@@ -70,7 +81,7 @@ class _HomeState extends State<Home> {
               questionIndex: _questionIndex,
               questions: _questions,
             )
-          : Result(),
+          : Result(_totalScore, _resetQuiz),
     );
   }
 }
