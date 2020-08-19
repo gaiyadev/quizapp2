@@ -73,7 +73,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('flutter'),
+        title: Text('flutter Quiz app'),
       ),
       body: _questionIndex < _questions.length
           ? Quiz(
