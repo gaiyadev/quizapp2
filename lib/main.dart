@@ -1,6 +1,6 @@
+import 'package:flutt_app/quiz.dart';
+import 'package:flutt_app/result.dart';
 import 'package:flutter/material.dart';
-import 'questions.dart';
-import 'answer.dart';
 
 void main() => runApp(MyApp());
 
@@ -20,19 +20,38 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _questionIndex = 0;
-  var questions = [
+  final _questions = [
     {
-      "questionText": "what's your favorite color?",
-      "anwers": ["black", "red", "green", "white"]
+      'questionText': 'What\'s your favorite color?',
+      'answers': [
+        {'text': 'Black', 'score': 10},
+        {'text': 'Red', 'score': 5},
+        {'text': 'Green', 'score': 3},
+        {'text': 'White', 'score': 1},
+      ],
     },
     {
-      "questionText": "what's your best meal?",
-      "anwers": ["rice", "benas", "yam", "melo"]
-    }
+      'questionText': 'What\'s your favorite animal?',
+      'answers': [
+        {'text': 'Rabbit', 'score': 3},
+        {'text': 'Snake', 'score': 11},
+        {'text': 'Elephant', 'score': 5},
+        {'text': 'Lion', 'score': 9},
+      ],
+    },
+    {
+      'questionText': 'Who\'s your favorite instructor?',
+      'answers': [
+        {'text': 'Max', 'score': 1},
+        {'text': 'Max', 'score': 1},
+        {'text': 'Max', 'score': 1},
+        {'text': 'Max', 'score': 1},
+      ],
+    },
   ];
 
-  void answerQuestion() {
-    if (_questionIndex < questions.length - 1) {
+  void _answerQuestion() {
+    if (_questionIndex < _questions.length) {
       setState(() {
         _questionIndex++;
       });
@@ -45,11 +64,13 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Text('flutter'),
       ),
-      body: Column(
-        children: [
-          Question(questions[_questionIndex]['questionText']),
-        ],
-      ),
+      body: _questionIndex < _questions.length
+          ? Quiz(
+              answerQuestion: _answerQuestion,
+              questionIndex: _questionIndex,
+              questions: _questions,
+            )
+          : Result(),
     );
   }
 }
