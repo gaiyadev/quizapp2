@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'questions.dart';
+import 'answer.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,44 +13,41 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  int _questionIndex = 0;
+  var questions = [
+    {
+      "questionText": "what's your favorite color?",
+      "anwers": ["black", "red", "green", "white"]
+    },
+    {
+      "questionText": "what's your best meal?",
+      "anwers": ["rice", "benas", "yam", "melo"]
+    }
+  ];
+
   void answerQuestion() {
-    print('worked');
+    if (_questionIndex < questions.length - 1) {
+      setState(() {
+        _questionIndex++;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    var question = [
-      'this is one',
-      'this is one',
-      'this is one',
-    ];
     return Scaffold(
       appBar: AppBar(
         title: Text('flutter'),
       ),
       body: Column(
         children: [
-          Text('the question'),
-          RaisedButton(
-            color: Colors.amberAccent,
-            onPressed: () {
-              answerQuestion();
-            },
-            child: Text('anser 1'),
-          ),
-          RaisedButton(
-            color: Colors.blueAccent,
-            onPressed: () {
-              answerQuestion();
-            },
-            child: Text('anser 2'),
-          ),
-          RaisedButton(
-            color: Colors.blueGrey,
-            onPressed: answerQuestion,
-            child: Text('anser 3'),
-          ),
+          Question(questions[_questionIndex]['questionText']),
         ],
       ),
     );
